@@ -1,6 +1,6 @@
 # Hiding Syscall Instructions
 
-The idea with the assembly instructions below is to hide the syscall instruction `syscall` in other instructions and jump in the middle of the other instructions to run the `syscall` instruction. The program simply prints 'Hello, World!' and a newline to the screen. This nothing more than the fundamental introduction to a programming language program and paying homage to the work of [Brian Kernighan and Dennis Ritchie](https://en.wikipedia.org/wiki/The_C_Programming_Language). 
+The idea with the assembly instructions below is to hide the syscall instruction `syscall` in other instructions and jump in the middle of the other instructions to run the `syscall` instruction. The program simply prints 'Hello, World!' and a newline to the screen. This is nothing more than the fundamental introduction to a programming language program and paying homage to the work of [Brian Kernighan and Dennis Ritchie](https://en.wikipedia.org/wiki/The_C_Programming_Language). 
 
 The machine code hexadecimal value for `syscall` on a 64 bit Debian based Linux OS is `0x0f 0x05`. In the disassembly below, the byte sequence `0xf 0x5` is seen starting at address 0x401006. The program loads a quad word value at 0x401000. This quad word value has three assembly instructions embedded in it. 0x401000 to 0x401005 is the instruction `movl $0x3c,%eax`. 0x401006 and 0x401007 is the instruction `syscall`. 0x401008 and 0x401009 is the instruction `jmp 401001`.
 
