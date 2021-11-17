@@ -1,0 +1,44 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/mman.h>
+#include <unistd.h>
+
+const size_t BYTES = 0x30;
+
+const unsigned char BLOB[] = {
+         0x48,0xb8,0x6f,0x72,0x6c,0x64,0x21,0x0a
+        ,0x00,0x00,0x50,0x48,0xb8,0x48,0x65,0x6c
+        ,0x6c,0x6f,0x2c,0x20,0x57,0x50,0x31,0xff
+        ,0x57,0xff,0xc7,0x89,0xf8,0x48,0x8d,0x74
+        ,0x24,0x08,0x48,0x8d,0x57,0x0d,0x0f,0x05
+        ,0x5f,0xb8,0x3c,0x00,0x00,0x00,0xeb,0xf6
+    };
+
+void foo(void);
+
+int main(void) {
+    int pagesize;
+    void *addr, *p;
+
+    p = addr = (void *) foo;
+    pagesize = sysconf(_SC_PAGESIZE);
+    p -= (size_t) p % pagesize;
+
+    if (mprotect(p, pagesize, PROT_READ|PROT_WRITE|PROT_EXEC) == -1) {
+        fprintf(stderr, "error with mprotect\n");
+        exit(EXIT_FAILURE);
+    }
+
+    memcpy(addr, BLOB, BYTES);
+
+    foo();
+
+    return EXIT_SUCCESS;
+}
+
+void foo(void) {
+    puts("The quick brown fox jumped over the lazy sleeping dog.");
+}
+
