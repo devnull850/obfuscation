@@ -1,6 +1,6 @@
 # Self Modifying Code
 
-This program demonstrates the use of self modifying code to obscure static analysis of the source and binary. A quick glance of the foo function looks like it should simply print the string literal, "The quick brown fox jumped over the lazy sleeping dog." When one compiles and then runs the executable, "Hello, World!" is printed to the terminal.
+This program demonstrates the use of self modifying code to obscure static analysis of the source and binary. A quick glance of the foo function looks like it should simply print the string literal, "The quick brown fox jumped over the lazy sleeping dog." When one compiles and then runs the executable, "Hello, World!" is printed to the terminal instead.
 
 ```
 void foo(void) {
